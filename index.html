@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="hi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PostPilot - Dark UI & Analytics Dashboard</title>
+
+    <!-- Tidio AI Chatbot Script (24/7 Hindi & English Support) -->
+    <script src="//code.tidio.co/q08b1h5jntzru2q6adozdletxhmwfipo.js" async></script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      body {
+        background-color: #0b0f19;
+        color: #f1f5f9;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #1e293b;
+      }
+      .logo {
+        color: #38bdf8;
+        font-size: 22px;
+        font-weight: bold;
+      }
+      .card {
+        background-color: #111827;
+        border: 1px solid #1f2937;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      }
+      .card-title {
+        color: #38bdf8;
+        font-size: 18px;
+        margin-bottom: 15px;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+      .stat-box {
+        background-color: #1f2937;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+      }
+      .stat-number {
+        font-size: 20px;
+        font-weight: bold;
+        color: #4ade80;
+      }
+      /* Visual Graph Styling */
+      .graph-container {
+        margin-top: 15px;
+      }
+      .graph-bars {
+        display: flex;
+        align-items: flex-end;
+        height: 120px;
+        gap: 12px;
+        padding-top: 10px;
+        border-bottom: 2px solid #374151;
+      }
+      .bar {
+        flex: 1;
+        background: linear-gradient(180deg, #38bdf8 0%, #2563eb 100%);
+        border-radius: 4px 4px 0 0;
+        text-align: center;
+        font-size: 10px;
+        color: #fff;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding-top: 5px;
+      }
+      /* Form Styling */
+      .form-group {
+        margin-bottom: 12px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #9ca3af;
+      }
+      input, textarea, select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        background-color: #1f2937;
+        border: 1px solid #374151;
+        color: #ffffff;
+        font-size: 14px;
+      }
+      button {
+        width: 100%;
+        padding: 12px;
+        border-radius: 6px;
+        border: none;
+        background-color: #2563eb;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+      button:hover {
+        background-color: #1d4ed8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      
+      <!-- Header -->
+      <header>
+        <div class="logo">⚡ PostPilot (Dark Modeling UI)</div>
+      </header>
+
+      <!-- Live Data Analytics & Graph Section -->
+      <div class="card">
+        <div class="card-title">📊 Real-Time Analytics & User Data</div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div>Active Users</div>
+            <div class="stat-number">12,450</div>
+          </div>
+          <div class="stat-box">
+            <div>Scheduled Posts</div>
+            <div class="stat-number">24</div>
+          </div>
+          <div class="stat-box">
+            <div>Published Reach</div>
+            <div class="stat-number">142K</div>
+          </div>
+        </div>
+
+        <!-- Dynamic Graph -->
+        <div class="graph-container">
+          <label>Weekly Engagement & Growth Graph</label>
+          <div class="graph-bars">
+            <div class="bar" style="height: 40%;">40%</div>
+            <div class="bar" style="height: 60%;">60%</div>
+            <div class="bar" style="height: 75%;">75%</div>
+            <div class="bar" style="height: 90%;">90%</div>
+            <div class="bar" style="height: 100%; background: linear-gradient(180deg, #4ade80 0%, #16a34a 100%);">100%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 24/7 Multilingual AI Automation Form -->
+      <div class="card">
+        <div class="card-title">🤖 24/7 AI Automation & Channel Setup</div>
+        <form onsubmit="event.preventDefault(); alert('Settings Saved!');">
+          <div class="form-group">
+            <label>Automation Target Channels</label>
+            <select>
+              <option>Email + WhatsApp + Messenger</option>
+              <option>WhatsApp Only</option>
+              <option>Email Only</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Preferred Language</label>
+            <select>
+              <option>Hindi + English (Auto-Detect)</option>
+              <option>Hindi Only</option>
+              <option>English Only</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Number / Email Address</label>
+            <input type="text" placeholder="Enter contact info for auto-updates" required />
+          </div>
+          <div class="form-group">
+            <label>Custom Auto-Reply Prompts</label>
+            <textarea rows="3" placeholder="Aapke user ko AI kya reply karega..."></textarea>
+          </div>
+          <button type="submit">Save & Activate AI Engine</button>
+        </form>
+      </div>
+
+    </div>
+  </body>
+              </html>
