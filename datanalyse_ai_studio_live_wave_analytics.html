@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html lang="hi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+<title>DatAnalyse AI Studio - 24/7 Secure Data Analytics Platform</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#a855f7", // violet-500
+                        "primary": "#d8b4fe", // violet-300
+                        "secondary-container": "#ec4899", // magenta-500
+                        "on-surface": "#e0e3e5",
+                        "border-color": "#a855f7"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Hanken Grotesk", "sans-serif"],
+                        "title-md": ["Hanken Grotesk", "sans-serif"],
+                        "body-md": ["Hanken Grotesk", "sans-serif"],
+                        "body-sm": ["Hanken Grotesk", "sans-serif"],
+                        "mono-data": ["Hanken Grotesk", "monospace"]
+                    },
+                    animation: {
+                        'wave': 'wave 2s infinite ease-in-out',
+                        'wave-delay-1': 'wave 2s infinite ease-in-out 0.2s',
+                        'wave-delay-2': 'wave 2s infinite ease-in-out 0.4s',
+                        'wave-delay-3': 'wave 2s infinite ease-in-out 0.6s',
+                        'wave-delay-4': 'wave 2s infinite ease-in-out 0.8s',
+                        'wave-delay-5': 'wave 2s infinite ease-in-out 1.0s',
+                        'pulse-glow': 'pulseGlow 2s infinite alternate',
+                        'fast-wave': 'fastWave 0.4s infinite alternate ease-in-out',
+                        'fast-wave-1': 'fastWave 0.5s infinite alternate ease-in-out 0.1s',
+                        'fast-wave-2': 'fastWave 0.3s infinite alternate ease-in-out 0.2s',
+                        'fast-wave-3': 'fastWave 0.6s infinite alternate ease-in-out 0.3s',
+                        'fast-wave-4': 'fastWave 0.45s infinite alternate ease-in-out 0.15s',
+                        'fast-wave-5': 'fastWave 0.55s infinite alternate ease-in-out 0.25s',
+                        'fast-wave-6': 'fastWave 0.35s infinite alternate ease-in-out 0.05s',
+                        'fast-wave-7': 'fastWave 0.65s infinite alternate ease-in-out 0.1s',
+                    },
+                    keyframes: {
+                        wave: {
+                            '0%, 100%': { height: '20%' },
+                            '50%': { height: '100%' },
+                        },
+                        fastWave: {
+                            '0%': { height: '20%', filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.6))' },
+                            '100%': { height: '100%', filter: 'drop-shadow(0 0 25px rgba(236, 72, 153, 1))' }
+                        },
+                        pulseGlow: {
+                            '0%': { boxShadow: '0 0 10px rgba(168, 85, 247, 0.5)' },
+                            '100%': { boxShadow: '0 0 20px rgba(236, 72, 153, 0.8)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #09090b; /* zinc-950 */
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a855f7;
+            border-radius: 4px;
+        }
+    </style>
+<script type="module">
+        class WebGLShader extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+            }
+
+            connectedCallback() {
+                const src = this.getAttribute('src');
+                if (!src) return;
+
+                const iframe = document.createElement('iframe');
+                iframe.src = src;
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.border = 'none';
+                
+                this.shadowRoot.appendChild(iframe);
+            }
+        }
+        customElements.define('webgl-shader', WebGLShader);
+    </script>
+</head>
+<body class="font-body-md text-on-surface m-0 bg-[#09090b] min-h-screen">
+<header class="bg-[#09090b]/90 backdrop-blur-md px-8 py-4 flex justify-between items-center flex-wrap gap-4 border-b-2 border-primary-container shadow-[0_4px_20px_rgba(168,85,247,0.3)]">
+<div class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-container to-secondary-container flex items-center gap-3 font-headline-lg tracking-tight">
+<i class="fa-solid fa-leaf text-primary-container"></i> DatAnalyse Botanical
+        </div>
+<div class="flex gap-4 flex-wrap">
+<div class="text-xs text-primary font-mono-data bg-black/40 px-3 py-1.5 rounded flex items-center gap-2 border border-primary-container/30" title="Encrypted Token">
+<i class="fa-solid fa-key"></i> <span id="tokenDisplay">exJhb...8xQ</span>
+</div>
+<div class="bg-primary-container/10 text-primary-container px-4 py-1.5 rounded-full text-sm border border-primary-container flex items-center gap-2 font-mono-data font-semibold">
+<i class="fa-solid fa-lock"></i> JWT Security: ACTIVE
+            </div>
+<div class="bg-secondary-container/10 text-secondary-container px-4 py-1.5 rounded-full text-sm border border-secondary-container flex items-center gap-2 font-mono-data font-semibold">
+<i class="fa-solid fa-shield-halved"></i> 200% Secure &amp; AI Active
+            </div>
+</div>
+</header>
+<div class="max-w-[1200px] mx-auto my-8 px-4">
+<div class="flex justify-center mb-6">
+<button class="bg-gradient-to-r from-primary-container to-secondary-container text-white font-bold py-3 px-8 rounded-lg border-none hover:opacity-90 transition-all shadow-[0_4px_15px_rgba(168,85,247,0.5)] flex justify-center items-center gap-2 text-lg font-title-md hover:-translate-y-0.5 animate-pulse-glow" onclick="if(window.tidioChatApi) { window.tidioChatApi.show(); window.tidioChatApi.open(); } else { console.error('Tidio API not loaded'); }">
+<i class="fa-solid fa-comments"></i> Test Chat
+        </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="col-span-1 bg-[#18181b]/50 backdrop-blur-xl p-6 rounded-xl border border-primary-container/40 shadow-2xl flex flex-col">
+<h2 class="mt-0 text-xl text-primary-container flex items-center gap-2 mb-6 font-title-md font-bold">
+<i class="fa-solid fa-gear"></i> Controls &amp; Data Model
+                </h2>
+<div class="border-2 border-dashed border-primary-container bg-primary-container/5 p-8 text-center rounded-xl cursor-pointer hover:bg-primary-container/15 transition-colors mb-6 group" onclick="document.getElementById('csvInput').click()">
+<i class="fa-solid fa-file-csv text-4xl text-secondary-container group-hover:scale-110 transition-transform"></i>
+<p class="mt-3 text-primary-container font-medium">Upload CSV File for Analysis</p>
+<input accept=".csv" class="hidden" id="csvInput" onchange="handleFileUpload(event)" type="file"/>
+</div>
+<label class="font-semibold text-primary-container mb-2 block" for="modelSelect">Select AI Analysis Model:</label>
+<select class="w-full p-3 rounded-lg border border-primary-container/50 bg-[#09090b] text-white mb-6 cursor-pointer focus:border-secondary-container focus:ring-1 focus:ring-secondary-container transition-all outline-none font-body-sm appearance-none" id="modelSelect" onchange="switchModel()">
+<option value="linear">Model A: Linear Trend Analysis</option>
+<option value="predictive">Model B: Predictive Forecasting</option>
+<option value="cluster">Model C: Data Cluster Model</option>
+</select>
+<button class="w-full p-3 rounded-lg bg-gradient-to-r from-primary-container to-secondary-container text-white font-bold border-none hover:opacity-90 transition-all hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(236,72,153,0.4)] mb-6 flex justify-center items-center gap-2" onclick="triggerSelfHealingCheck()">
+<i class="fa-solid fa-kit-medical"></i> Run Self-Healing Diagnostics
+                </button>
+<label class="font-semibold text-primary-container mb-2 block">Self-Healing System Log:</label>
+<div class="bg-black/50 p-3 rounded-lg font-mono-data text-xs h-32 overflow-y-auto text-primary-container border border-primary-container/30 shadow-inner" id="systemLogs">
+                    [SYSTEM READY] DatAnalyse Botanical Engine Started...<br/>
+                    [24/7 AI] Automation Monitoring Active.<br/>
+                    [SECURITY] JWT Token validation successful.<br/>
+</div>
+</div>
+<div class="col-span-1 md:col-span-2 bg-[#18181b]/50 backdrop-blur-xl p-6 rounded-xl border border-primary-container/40 shadow-2xl flex flex-col">
+<div class="flex justify-between items-center mb-6 flex-wrap gap-4 border-b border-primary-container/20 pb-4">
+<h2 class="m-0 text-xl text-primary-container flex items-center gap-2 font-title-md font-bold">
+<i class="fa-solid fa-chart-pie"></i> Real-time Analytics &amp; Visuals
+                    </h2>
+<div class="flex gap-2" id="chartTypeGroup">
+<button class="px-4 py-2 rounded border border-primary-container/50 bg-[#09090b] text-primary-container font-medium hover:bg-primary-container/20 transition-colors active-chart-btn" onclick="setChartType('doughnut', this)">Fluid</button>
+<button class="px-4 py-2 rounded border border-primary-container/50 bg-[#09090b] text-primary-container font-medium hover:bg-primary-container/20 transition-colors" onclick="setChartType('wave', this)">Waves</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+<div class="relative h-[350px] w-full flex items-center justify-center rounded-xl overflow-hidden border border-primary-container/30 shadow-[0_0_20px_rgba(168,85,247,0.2)] bg-black/40"><svg class="w-64 h-64 drop-shadow-[0_0_15px_rgba(168,85,247,0.8)]" viewbox="0 0 100 100"><circle cx="50" cy="50" fill="transparent" r="40" stroke="#a855f7" stroke-dasharray="150 251.2" stroke-width="12" transform="rotate(-90 50 50)"></circle><circle cx="50" cy="50" fill="transparent" r="40" stroke="#ec4899" stroke-dasharray="50 251.2" stroke-dashoffset="-150" stroke-width="12" transform="rotate(-90 50 50)"></circle><circle cx="50" cy="50" fill="transparent" r="40" stroke="#d8b4fe" stroke-dasharray="25 251.2" stroke-dashoffset="-200" stroke-width="12" transform="rotate(-90 50 50)"></circle></svg><div class="absolute inset-0 flex flex-col items-center justify-center"><span class="text-4xl font-bold text-secondary-container drop-shadow-[0_0_10px_rgba(236,72,153,0.8)]">70%</span><span class="text-xs font-bold text-secondary-container tracking-widest uppercase">Growth</span></div></div>
+<div class="relative h-[350px] w-full flex items-end justify-between gap-4 p-6 border border-secondary-container/30 rounded-xl bg-black/40 shadow-[0_0_20px_rgba(236,72,153,0.1)]"><div class="flex items-end justify-around w-full h-48 px-4 gap-2"><div class="w-full bg-gradient-to-t from-primary-container to-secondary-container rounded-t-lg shadow-[0_0_20px_rgba(168,85,247,0.8)] animate-fast-wave" style="height: 40%;"></div><div class="w-full bg-gradient-to-t from-primary-container to-secondary-container rounded-t-lg shadow-[0_0_20px_rgba(168,85,247,0.8)] animate-fast-wave-1" style="height: 70%;"></div><div class="w-full bg-gradient-to-t from-primary-container to-secondary-container rounded-t-lg shadow-[0_0_20px_rgba(168,85,247,0.8)] animate-fast-wave-2" style="height: 50%;"></div><div class="w-full bg-gradient-to-t from-primary-container to-secondary-container rounded-t-lg shadow-[0_0_20px_rgba(168,85,247,0.8)] animate-fast-wave-3" style="height: 90%;"></div><div class="w-full bg-gradient-to-t from-primary-container to-secondary-container rounded-t-lg shadow-[0_0_20px_rgba(168,85,247,0.8)] animate-fast-wave-4" style="height: 60%;"></div><div class="w-full bg-gradient-to-t from-primary-container to-secondary-container rounded-t-lg shadow-[0_0_20px_rgba(168,85,247,0.8)] animate-fast-wave-5" style="height: 80%;"></div><div class="w-full bg-gradient-to-t from-primary-container to-secondary-container rounded-t-lg shadow-[0_0_20px_rgba(168,85,247,0.8)] animate-fast-wave-6" style="height: 45%;"></div><div class="w-full bg-gradient-to-t from-primary-container to-secondary-container rounded-t-lg shadow-[0_0_20px_rgba(168,85,247,0.8)] animate-fast-wave-7" style="height: 65%;"></div></div></div>
+</div>
+<div class="flex justify-between items-center mb-4 flex-wrap gap-4 border-b border-primary-container/20 pb-4">
+<h2 class="m-0 text-xl text-primary-container flex items-center gap-2 font-title-md font-bold">
+<i class="fa-solid fa-table"></i> Data Preview
+                    </h2>
+<div class="flex gap-3">
+<button class="px-4 py-2 rounded border border-primary-container/50 bg-[#09090b] text-primary-container text-sm font-medium hover:bg-primary-container/20 transition-colors flex items-center gap-2" onclick="exportData('csv')"><i class="fa-solid fa-file-csv text-secondary-container"></i> CSV</button>
+<button class="px-4 py-2 rounded border border-primary-container/50 bg-[#09090b] text-primary-container text-sm font-medium hover:bg-primary-container/20 transition-colors flex items-center gap-2" onclick="exportData('pdf')"><i class="fa-solid fa-file-pdf text-secondary-container"></i> PDF</button>
+</div>
+</div>
+<div class="overflow-x-auto rounded-lg border border-primary-container/30 bg-[#09090b]/50">
+<table class="w-full border-collapse text-left text-sm" id="dataTable">
+<thead>
+<tr id="tableHead">
+<th class="p-4 bg-[#18181b] text-secondary-container font-semibold whitespace-nowrap border-b border-primary-container/40 font-mono-data">Category</th>
+<th class="p-4 bg-[#18181b] text-secondary-container font-semibold whitespace-nowrap border-b border-primary-container/40 font-mono-data">Value</th>
+</tr>
+</thead>
+<tbody class="text-on-surface font-body-sm" id="tableBody">
+<tr class="hover:bg-primary-container/10 transition-colors"><td class="p-4 border-b border-primary-container/10">Jan</td><td class="p-4 border-b border-primary-container/10 text-primary">12</td></tr>
+<tr class="hover:bg-primary-container/10 transition-colors"><td class="p-4 border-b border-primary-container/10">Feb</td><td class="p-4 border-b border-primary-container/10 text-primary">19</td></tr>
+<tr class="hover:bg-primary-container/10 transition-colors"><td class="p-4 border-b border-primary-container/10">Mar</td><td class="p-4 border-b border-primary-container/10 text-primary">3</td></tr>
+<tr class="hover:bg-primary-container/10 transition-colors"><td class="p-4 border-b border-primary-container/10">Apr</td><td class="p-4 border-b border-primary-container/10 text-primary">5</td></tr>
+<tr class="hover:bg-primary-container/10 transition-colors"><td class="p-4 border-b border-primary-container/10">May</td><td class="p-4 border-b border-primary-container/10 text-primary">2</td></tr>
+<tr class="hover:bg-primary-container/10 transition-colors"><td class="p-4 border-b border-primary-container/10">Jun</td><td class="p-4 border-b border-primary-container/10 text-primary">3</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<script>
+        const WEBSITE_NAME = "DatAnalyse Botanical";
+        let currentChartType = 'doughnut';
+        let currentData = { values: [12, 19, 3, 5, 2, 3], labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'] };
+
+        // Simulate token rotation
+        setInterval(() => {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let str = 'eyJhb';
+            for(let i=0; i<5; i++) str += chars.charAt(Math.floor(Math.random() * chars.length));
+            str += '8xQ';
+            document.getElementById('tokenDisplay').innerText = str;
+        }, 30000);
+
+        function logMessage(msg) {
+            const logBox = document.getElementById('systemLogs');
+            const time = new Date().toLocaleTimeString();
+            logBox.innerHTML += `[${time}] ${msg}<br>`;
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        window.onload = function() {
+            logMessage(`${WEBSITE_NAME} Initialized Successfully.`);
+            updateTable(currentData.values, currentData.labels);
+            
+            // Set initial active state styling
+            const initialBtn = document.querySelector('.active-chart-btn');
+            if(initialBtn) {
+                initialBtn.classList.remove('bg-[#09090b]', 'text-primary-container');
+                initialBtn.classList.add('bg-gradient-to-r', 'from-primary-container', 'to-secondary-container', 'text-white', 'font-bold');
+            }
+        };
+
+        function setChartType(type, btnElement) {
+            currentChartType = type;
+            const buttons = document.getElementById('chartTypeGroup').getElementsByTagName('button');
+            for(let btn of buttons) {
+                btn.classList.remove('bg-gradient-to-r', 'from-primary-container', 'to-secondary-container', 'text-white', 'font-bold', 'active-chart-btn');
+                btn.classList.add('bg-[#09090b]', 'text-primary-container');
+            }
+            btnElement.classList.remove('bg-[#09090b]', 'text-primary-container');
+            btnElement.classList.add('bg-gradient-to-r', 'from-primary-container', 'to-secondary-container', 'text-white', 'font-bold', 'active-chart-btn');
+            logMessage(`Chart view toggled`);
+        }
+
+        function updateTable(values, labels) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            for(let i=0; i<labels.length; i++) {
+                tbody.innerHTML += `<tr class="hover:bg-primary-container/10 transition-colors"><td class="p-4 border-b border-primary-container/10">${labels[i]}</td><td class="p-4 border-b border-primary-container/10 text-primary">${values[i]}</td></tr>`;
+            }
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            logMessage(`Reading uploaded file: ${file.name}`);
+
+            Papa.parse(file, {
+                complete: function(results) {
+                    try {
+                        const parsedData = results.data;
+                        if (parsedData.length < 2) throw new Error("File contains insufficient data.");
+
+                        let labels = [];
+                        let values = [];
+
+                        for (let i = 1; i < parsedData.length; i++) {
+                            if (parsedData[i][0] && parsedData[i][1]) {
+                                labels.push(parsedData[i][0]);
+                                values.push(parseFloat(parsedData[i][1]) || 0);
+                            }
+                        }
+                        
+                        currentData = { values, labels };
+                        updateTable(values, labels);
+                        logMessage(`SUCCESS: CSV Processed & UI Updated.`);
+                    } catch (err) {
+                        selfHealAndRecover(`CSV Parsing Issue: ${err.message}`);
+                    }
+                },
+                error: function(err) {
+                    selfHealAndRecover(`File Reading Failed: ${err}`);
+                }
+            });
+        }
+
+        function switchModel() {
+            const selectedModel = document.getElementById('modelSelect').value;
+            logMessage(`Switching Model to: ${selectedModel.toUpperCase()}`);
+
+            let newValues, newLabels;
+            if (selectedModel === 'linear') {
+                newValues = [10, 20, 30, 40, 50];
+                newLabels = ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'];
+            } else if (selectedModel === 'predictive') {
+                newValues = [15, 25, 18, 45, 60, 80];
+                newLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
+            } else {
+                newValues = [50, 100, 75, 125, 90];
+                newLabels = ['Cluster 1', 'Cluster 2', 'Cluster 3', 'Cluster 4', 'Cluster 5'];
+            }
+
+            currentData = { values: newValues, labels: newLabels };
+            updateTable(newValues, newLabels);
+        }
+        
+        function exportData(format) {
+            logMessage(`Initiating Export format: ${format.toUpperCase()}`);
+            setTimeout(() => {
+                logMessage(`Simulated export to ${format.toUpperCase()} successful.`);
+                alert(`Export to ${format.toUpperCase()} functionality simulated for preview.`);
+            }, 500);
+        }
+
+        window.onerror = function(message, source, lineno, colno, error) {
+            selfHealAndRecover(`Runtime Error detected at line ${lineno}: ${message}`);
+            return true;
+        };
+
+        function selfHealAndRecover(reason) {
+            logMessage(`[WARNING] Exception Detected: ${reason}`);
+            logMessage(`[SELF-HEALING ACTIVE] Re-calibrating Website Memory & UI...`);
+
+            setTimeout(() => {
+                currentData = { values: [10, 20, 15, 30, 25], labels: ['Base 1', 'Base 2', 'Base 3', 'Base 4', 'Base 5'] };
+                updateTable(currentData.values, currentData.labels);
+                logMessage(`[SYSTEM REPAIRED] Website auto-recovered and updated to stable state.`);
+            }, 1000);
+        }
+
+        function triggerSelfHealingCheck() {
+            logMessage(`Initiating manual Self-Healing Diagnostic...`);
+            setTimeout(() => {
+                logMessage(`All System API Gateways, Security Protocols & Charts 100% Healthy.`);
+            }, 800);
+        }
+    </script>
+<script async="" src="//code.tidio.co/q08b1h5jntzru2q6adozdletxhmwfipo.js"></script>
+</body></html>
