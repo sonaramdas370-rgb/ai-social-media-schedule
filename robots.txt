@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sonaramdas370-rgb.github.io/ai-social-media-schedule/sitemap.xml
